@@ -62,17 +62,10 @@ public class DbServiceTest {
     public void shouldSaveTask() {
         //Given
         Task task = new Task(1L, "Test title", "Test cont");
-
-        when(taskRepository.save(task)).thenReturn(task);
-
         //When
-        Task task1 = dbService.saveTask(task);
-
+        dbService.saveTask(task);
         //Then
-        assertNotNull(task1);
-        assertEquals(task.getId(), task.getId());
-        assertEquals(task.getTitle(), task.getTitle());
-        assertEquals(task.getContent(), task.getContent());
+        verify(taskRepository, times(1)).save(task);
     }
 
     @Test
