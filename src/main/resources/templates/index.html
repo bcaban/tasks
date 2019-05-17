@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta
+            charset="UTF-8">
+    </meta>
+    <title>My welcome page</title>
+</head>
+<body>
+<h1>First impression of my page</h1>
+
+<!--/*@thymesVar id="variable" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<span th:text="${variable}"></span>
+
+<br>
+<!--/*@thymesVar id="firstMathOp" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<!--/*@thymesVar id="two" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<span th:text="${firstMathOp}"></span>
+<span th:text="${two} * ${two}"></span>
+</br>
+
+<br>
+<!--/*@thymesVar id="secondMathOp" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<!--/*@thymesVar id="two" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<span th:text="${secondMathOp}"></span>
+<span th:text="${two} * ${two} + ${two}"></span>
+</br>
+
+<br>
+<!--/*@thymesVar id="thirdMathOp" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<!--/*@thymesVar id="two" type="com.crud.tasks.controller.StaticWebPageController"*/-->
+<span th:text="${thirdMathOp}"></span>
+<span th:text="${two} - ${two} * ${two}"></span>
+</br>
+
+</body>
+</html>
