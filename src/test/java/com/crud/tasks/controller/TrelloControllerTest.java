@@ -6,13 +6,9 @@ import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.domain.TrelloListDto;
 import com.crud.tasks.trello.facade.TrelloFacade;
 import com.google.gson.Gson;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Matchers;
-import org.mockito.internal.progress.ArgumentMatcherStorage;
-import org.mockito.internal.progress.ArgumentMatcherStorageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -50,7 +46,7 @@ public class TrelloControllerTest {
         List<TrelloBoardDto> trelloBoards = new ArrayList<>();
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
         //When & Then
-        mockMvc.perform(get("/v1/trello/getTrelloBoards").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/trello/boards").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200)) // or isOk()
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -65,7 +61,7 @@ public class TrelloControllerTest {
 
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
         //When & Then
-        mockMvc.perform(get("/v1/trello/getTrelloBoards").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/trello/boards").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 // Trello board fields
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -101,7 +97,7 @@ public class TrelloControllerTest {
         String jsonContent = gSon.toJson(trelloCardDto);
 
         //When & Then
-        mockMvc.perform(post("/v1/trello/createTrelloCard")
+        mockMvc.perform(post("/v1/trello/cards")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -109,6 +105,5 @@ public class TrelloControllerTest {
                 .andExpect(jsonPath("$.name", is("Test")))
                 .andExpect(jsonPath("$.shortUrl", is("http://test.com")))
                 .andExpect(jsonPath("$.badges", is(nullValue())));
-
     }
 }

@@ -50,7 +50,7 @@ public class TaskControllerTest {
         tasks.add(new TaskDto(1L, "Test title", "Test cont"));
         when(taskMapper.mapToTaskDtoList(service.getAllTasks())).thenReturn(tasks);
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -65,7 +65,7 @@ public class TaskControllerTest {
         when(service.getTask(anyLong())).thenReturn(Optional.of(new Task(1L, "Test title", "Test cont")));
         when(taskMapper.mapToTaskDto(any(Task.class))).thenReturn(taskDto);
         //When & Then
-        mockMvc.perform(get("/v1/task/getTask").param("taskId", "1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks/{taskId}", "1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("Test title")))
@@ -80,7 +80,7 @@ public class TaskControllerTest {
         Gson gSon = new Gson();
         String jsonContent = gSon.toJson(taskDto);
         //When & Then
-        mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", "1").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(delete("/v1/tasks/{taskId}", "1").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
@@ -98,7 +98,7 @@ public class TaskControllerTest {
         Gson gSon = new Gson();
         String jsonContent = gSon.toJson(taskDto);
         //When & Then
-        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(jsonPath("$.id", is(1)))
@@ -114,7 +114,7 @@ public class TaskControllerTest {
         Gson gSon = new Gson();
         String jsonContent = gSon.toJson(taskDto);
         //When & Then
-        mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
